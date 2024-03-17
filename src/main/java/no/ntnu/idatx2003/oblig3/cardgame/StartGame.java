@@ -4,6 +4,6 @@ public class StartGame {
   public StartGame() {
   }
   public static void main(String[] args) {
-
+    CardGameWindow.appMain(args);
   }
 }
