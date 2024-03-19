@@ -1,18 +1,23 @@
 package no.ntnu.idatx2003.oblig3.cardgame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class DeckOfCards {
-  private final ArrayList<PlayingCard> deckOfCards;
-  
+  private final HashMap<String, PlayingCard> deckOfCards;
+
   public DeckOfCards() {
-    this.deckOfCards = new ArrayList<>();
-    char[] suits = {'S', 'H', 'D', 'C'};
+    char[] suits = {'H', 'D', 'C', 'S'};
+    String[] playingCardDeckReference = new String[52];
+    this.deckOfCards = new HashMap<>();
+
+    int index = 0;
     for (char suit : suits) {
       for (int face = 1; face < 14; face++) {
         PlayingCard playingCard = new PlayingCard(suit, face);
-        this.deckOfCards.add(playingCard);
+        this.deckOfCards.put(playingCard.getAsString(), playingCard);
+        playingCardDeckReference[index] = playingCard.getAsString();
       }
     }
   }
