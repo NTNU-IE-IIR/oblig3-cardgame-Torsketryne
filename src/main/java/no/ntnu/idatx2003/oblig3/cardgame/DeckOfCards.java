@@ -6,10 +6,11 @@ import java.util.Random;
 
 public class DeckOfCards {
   private final HashMap<String, PlayingCard> deckOfCards;
+  private String[] playingCardDeckReference;
 
   public DeckOfCards() {
     char[] suits = {'H', 'D', 'C', 'S'};
-    String[] playingCardDeckReference = new String[52];
+    playingCardDeckReference = new String[52];
     this.deckOfCards = new HashMap<>();
 
     int index = 0;
@@ -63,6 +64,15 @@ public class DeckOfCards {
       throw new RuntimeException("Card could not be found");
     }
     return playingCard;
+  }
+
+  public void refillDeck() {
+    for (String k : playingCardDeckReference) {
+      if (!deckOfCards.containsKey(k)) {
+        char[] signAndFace = k.toCharArray();
+        deckOfCards.put(k, new PlayingCard(signAndFace[0], signAndFace[1]));
+      }
+    }
   }
 
   public PlayingCard getPlayingCardIndex(int index) {
