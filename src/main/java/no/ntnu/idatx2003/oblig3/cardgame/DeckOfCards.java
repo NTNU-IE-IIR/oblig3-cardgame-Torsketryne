@@ -43,29 +43,6 @@ public class DeckOfCards {
     return playingCardHand;
   }
 
-  public PlayingCard getPlayingCardSpecific(char suit, int face) {
-    if (suit != 'H' && suit != 'D' && suit != 'C' && suit != 'S') {
-      throw new IllegalArgumentException("Parameter suit must be one of H, D, C or S");
-    }
-    if (face < 1 || face > 13) {
-      throw new IllegalArgumentException("Parameter face must be a number between 1 to 13");
-    }
-    boolean looking = true;
-    PlayingCard playingCard = null;
-    int index = 0;
-    while (looking && index < 53) {
-      playingCard = deckOfCards.get(index);
-      if (playingCard.getFace() == face && playingCard.getSuit() == suit) {
-        looking = false;
-      }
-      index++;
-    }
-    if (looking) {
-      throw new RuntimeException("Card could not be found");
-    }
-    return playingCard;
-  }
-
   public void refillDeck() {
     for (String k : playingCardDeckReference) {
       if (!deckOfCards.containsKey(k)) {
@@ -73,9 +50,5 @@ public class DeckOfCards {
         deckOfCards.put(k, new PlayingCard(signAndFace[0], signAndFace[1]));
       }
     }
-  }
-
-  public PlayingCard getPlayingCardIndex(int index) {
-    return deckOfCards.get(index);
   }
 }
