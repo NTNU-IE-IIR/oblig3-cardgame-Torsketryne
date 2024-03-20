@@ -7,28 +7,85 @@ public class PlayingCardHand {
   private final ArrayList<PlayingCard> handOfPlayingCards;
 
   public PlayingCardHand() {
-    handOfPlayingCards = new ArrayList<>();
+    this.handOfPlayingCards = new ArrayList<>();
   }
 
   public void addPlayingCardToHand(PlayingCard playingCard) {
     if (playingCard == null) {
       throw new IllegalArgumentException("Parameter cannot be of value null");
     }
-    handOfPlayingCards.add(playingCard);
+    this.handOfPlayingCards.add(playingCard);
   }
 
   public boolean removePlayingCardFromHand(PlayingCard playingCard) {
     if (playingCard == null) {
       throw new IllegalArgumentException("Parameter cannot be of value null");
     }
-    return handOfPlayingCards.remove(playingCard);
+    return this.handOfPlayingCards.remove(playingCard);
   }
 
   public void emptyPlayingCardHand() {
-    handOfPlayingCards.clear();
+    this.handOfPlayingCards.clear();
   }
 
   public ArrayList<PlayingCard> getPlayingCardHand() {
-    return handOfPlayingCards;
+    return this.handOfPlayingCards;
+  }
+
+  public boolean isFlush() {
+    boolean answer = false;
+
+    int cCount = 0;
+    int sCount = 0;
+    int hCount = 0;
+    int dCount = 0;
+
+    for (PlayingCard playingCard : this.handOfPlayingCards) {
+      if (playingCard.getSuit() == 'c') {
+        cCount += 1;
+      } else if (playingCard.getSuit() == 's') {
+        sCount += 1;
+      }
+       else if (playingCard.getSuit() == 'h') {
+        hCount += 1;
+      }
+       else if (playingCard.getSuit() == 'd') {
+        dCount += 1;
+      }
+    }
+
+    if (cCount == 5 || sCount == 5 || hCount == 5 || dCount == 5) {
+      answer = true;
+    }
+
+    return answer;
+  }
+
+  public int sumOfhand() {
+    int sum = 0;
+    for (PlayingCard playingCard : this.handOfPlayingCards) {
+      sum += playingCard.getFace();
+    }
+    return sum;
+  }
+
+  public ArrayList<PlayingCard> listOfHeartsInHand() {
+    ArrayList<PlayingCard> listOfHearts= new ArrayList<>();
+    for (PlayingCard playingCard : this.handOfPlayingCards) {
+      if (playingCard.getSuit() == 'h') {
+        listOfHearts.add(playingCard);
+      }
+    }
+    return listOfHearts;
+  }
+
+  public boolean isClubWomanInHand() {
+    boolean answer = false;
+    for (PlayingCard playingCard : this.handOfPlayingCards) {
+      if (playingCard.getAsString().equals("c12")) {
+        answer = true;
+      }
+    }
+    return answer;
   }
 }

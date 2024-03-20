@@ -23,7 +23,7 @@ public class DeckOfCards {
     }
   }
 
-  private ArrayList<PlayingCard> makeArrayListFromHashmap(HashMap<String, PlayingCard> hashMap) {
+  public ArrayList<PlayingCard> makeArrayListFromHashmap(HashMap<String, PlayingCard> hashMap) {
     ArrayList<PlayingCard> arrayList= null;
 
     if (hashMap != null) {
@@ -45,7 +45,7 @@ public class DeckOfCards {
     int count = 0;
 
     while (sizeOfHand > count) {
-      int randomNumber = random.nextInt(52);
+      int randomNumber = random.nextInt(deckOfCards.size());
       PlayingCard playingCard = deckOfCardsList.get(randomNumber);
       this.deckOfCards.remove(deckOfCardsList.get(randomNumber).getAsString());
       playingCardHand.addPlayingCardToHand(playingCard);
@@ -61,5 +61,9 @@ public class DeckOfCards {
         this.deckOfCards.put(k, new PlayingCard(signAndFace[0], signAndFace[1]));
       }
     }
+  }
+
+  public HashMap<String, PlayingCard> getDeckOfCards() {
+    return this.deckOfCards;
   }
 }
