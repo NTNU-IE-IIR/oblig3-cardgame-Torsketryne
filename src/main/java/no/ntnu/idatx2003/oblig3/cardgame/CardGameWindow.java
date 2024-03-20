@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -51,14 +52,21 @@ public class CardGameWindow
 
     Button dealCardsButton = new Button();
     dealCardsButton.setText("Deal cards");
+    Button checkCardsButton = new Button();
+    checkCardsButton.setText("Check cards");
 
-
+    TextField cardSumField = new TextField();
+    cardSumField.setText("0");
+    TextField flushField = new TextField();
+    flushField.setText("No");
 
     Image c12 = new Image("/images/playingCardsSizeSmall/c13.png");
     ImageView imageView2 = new ImageView();
     imageView2.setImage(c12);
 
-    playArea.getChildren().add(dealCardsButton);
+    playArea.getChildren().addAll(dealCardsButton, checkCardsButton);
+
+    infoArea.getChildren().addAll(cardSumField, flushField);
 
     Scene scene = new Scene(rootNode, 900, 600);
 
@@ -67,7 +75,7 @@ public class CardGameWindow
 
     dealCardsButton.setOnAction(actionEvent -> {
           System.out.println("dealHand button pressed");
-          deckOfCards.dealHand(5);
+          PlayingCardHand dealtHand = deckOfCards.dealHand(5);
           cardView.getChildren().removeAll();
           ImageView imageView = new ImageView();
           imageView.setImage(cardImages.get("h12"));
@@ -75,7 +83,35 @@ public class CardGameWindow
           stage.setScene(scene);
           stage.show();
         }
-    );
+        );
+
+    checkCardsButton.setOnAction(actionEvent -> {
+          System.out.println("checkHand button pressed");
+          PlayingCardHand dealtHand = deckOfCards.dealHand(5);
+          if (dealtHand != null) {
+            if (dealtHand.isFlush()) {
+              System.out.println("There is a flush");
+              flushField.setText("Yes");
+            } else {
+              System.out.println("There is not a flush");
+              flushField.setText("No");
+            }
+
+            if (dealtHand.isClubWomanInHand()) {
+              System.out.println("There is a Queen of clubs in the hand");
+            } else {
+              System.out.println("There is not a Queen of clubs in the hand");
+            }
+
+            if (!dealtHand.listOfHeartsInHand().isEmpty()) {
+              System.out.println("There are cards of heart in the hand");
+            }
+
+            System.out.println("The sum of the cards is: " + dealtHand.sumOfhand());
+            cardSumField.setText(dealtHand.sumOfhand() + "");
+          }
+        }
+        );
 
     stage.show();
   }
