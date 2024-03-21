@@ -60,6 +60,7 @@ public class CardGameWindow
     TextField flushField = new TextField();
     flushField.setText("No");
 
+
     TextField womanField = new TextField();
 
     Image c12 = new Image("/images/playingCardsSizeSmall/c13.png");
