@@ -41,15 +41,15 @@ public class PlayingCardHand {
     int dCount = 0;
 
     for (PlayingCard playingCard : this.handOfPlayingCards) {
-      if (playingCard.getSuit() == 'c') {
+      if (playingCard.getSuit() == 'C') {
         cCount += 1;
-      } else if (playingCard.getSuit() == 's') {
+      } else if (playingCard.getSuit() == 'S') {
         sCount += 1;
       }
-       else if (playingCard.getSuit() == 'h') {
+       else if (playingCard.getSuit() == 'H') {
         hCount += 1;
       }
-       else if (playingCard.getSuit() == 'd') {
+       else if (playingCard.getSuit() == 'D') {
         dCount += 1;
       }
     }
@@ -72,7 +72,7 @@ public class PlayingCardHand {
   public ArrayList<PlayingCard> listOfHeartsInHand() {
     ArrayList<PlayingCard> listOfHearts= new ArrayList<>();
     for (PlayingCard playingCard : this.handOfPlayingCards) {
-      if (playingCard.getSuit() == 'h') {
+      if (playingCard.getSuit() == 'H') {
         listOfHearts.add(playingCard);
       }
     }
@@ -82,7 +82,7 @@ public class PlayingCardHand {
   public boolean isClubWomanInHand() {
     boolean answer = false;
     for (PlayingCard playingCard : this.handOfPlayingCards) {
-      if (playingCard.getAsString().equals("c12")) {
+      if (playingCard.getAsString().equals("C12")) {
         answer = true;
       }
     }
