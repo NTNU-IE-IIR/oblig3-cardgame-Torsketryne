@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.event.Event;
@@ -59,9 +60,10 @@ public class CardGameWindow
         Button checkCardsButton = new Button();
         checkCardsButton.setText("Check cards");
 
-        TextField cardSumField = new TextField();
-        TextField flushField = new TextField();
-        TextField womanField = new TextField();
+        Text cardSumField = new Text();
+        Text flushField = new Text();
+        Text womanField = new Text();
+        Text heartField = new Text();
 
         Image cardBackside = new Image("/images/playingCardsSizeSmall/B0.png");
         this.cardImage1 = new ImageView(cardBackside);
@@ -73,20 +75,20 @@ public class CardGameWindow
         cardView.getChildren().addAll(
                 this.cardImage1, this.cardImage2, this.cardImage3, this.cardImage4, this.cardImage5);
         playArea.getChildren().addAll(dealCardsButton, checkCardsButton);
-        infoArea.getChildren().addAll(cardSumField, flushField);
+        infoArea.getChildren().addAll(cardSumField, flushField, womanField, heartField);
 
         dealCardsButton.setOnAction(actionEvent -> {
                     System.out.println("dealHand button pressed");
 
-            this.dealtHand = deckOfCards.dealHand(5);
+                    this.dealtHand = deckOfCards.dealHand(5);
 
                     ImageView imageView = new ImageView(cardBackside);
 
-            this.cardImage1 = imageView;
-            this.cardImage2 = imageView;
-            this.cardImage3 = imageView;
-            this.cardImage4 = imageView;
-            this.cardImage5 = imageView;
+                    this.cardImage1 = imageView;
+                    this.cardImage2 = imageView;
+                    this.cardImage3 = imageView;
+                    this.cardImage4 = imageView;
+                    this.cardImage5 = imageView;
 
                     //imageView1.setImage(dealtHand.getPlayingCardHand().get(0));
                     //imageView2.setImage(cardImages);
@@ -115,7 +117,11 @@ public class CardGameWindow
 
 
                         if (!this.dealtHand.listOfHeartsInHand().isEmpty()) {
-                            System.out.println("There are cards of heart in the hand");
+                            System.out.println(this.dealtHand.stringOfHeartsInHand());
+                            heartField.setText(this.dealtHand.stringOfHeartsInHand());
+                        } else {
+                            System.out.println("There are no hearts in the deck");
+                            heartField.setText("No hearts in hand");
                         }
 
                         System.out.println("The sum of the cards is: " + this.dealtHand.sumOfhand());

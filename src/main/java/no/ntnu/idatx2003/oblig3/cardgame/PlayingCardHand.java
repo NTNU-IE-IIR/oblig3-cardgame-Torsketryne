@@ -1,6 +1,7 @@
 package no.ntnu.idatx2003.oblig3.cardgame;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PlayingCardHand {
 
@@ -31,6 +32,8 @@ public class PlayingCardHand {
   public ArrayList<PlayingCard> getPlayingCardHand() {
     return this.handOfPlayingCards;
   }
+
+  public Iterator<PlayingCard> getPlayingCardHandIterator() {return this.handOfPlayingCards.iterator();}
 
   public boolean isFlush() {
     boolean answer = false;
@@ -77,6 +80,21 @@ public class PlayingCardHand {
       }
     }
     return listOfHearts;
+  }
+
+  public String stringOfHeartsInHand() {
+    StringBuilder heartsInHand = new StringBuilder();
+
+    if (!listOfHeartsInHand().isEmpty()) {
+      Iterator<PlayingCard> handOfPlayingCardsIterator = getPlayingCardHandIterator();
+      while (handOfPlayingCardsIterator.hasNext()) {
+        heartsInHand.append(handOfPlayingCardsIterator.next().getAsString());
+        if (handOfPlayingCardsIterator.hasNext()) {
+          heartsInHand.append(", ");
+        }
+      }
+    }
+    return heartsInHand.toString();
   }
 
   public boolean isClubWomanInHand() {
