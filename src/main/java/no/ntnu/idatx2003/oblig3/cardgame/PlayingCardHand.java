@@ -86,7 +86,7 @@ public class PlayingCardHand {
     StringBuilder heartsInHand = new StringBuilder();
 
     if (!listOfHeartsInHand().isEmpty()) {
-      Iterator<PlayingCard> handOfPlayingCardsIterator = getPlayingCardHandIterator();
+      Iterator<PlayingCard> handOfPlayingCardsIterator = listOfHeartsInHand().iterator();
       while (handOfPlayingCardsIterator.hasNext()) {
         heartsInHand.append(handOfPlayingCardsIterator.next().getAsString());
         if (handOfPlayingCardsIterator.hasNext()) {
