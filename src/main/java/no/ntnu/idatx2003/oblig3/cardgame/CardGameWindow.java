@@ -20,13 +20,14 @@ import javafx.event.Event;
 public class CardGameWindow
         extends Application {
 
-    ImageView cardImage1;
-    ImageView cardImage2;
-    ImageView cardImage3;
-    ImageView cardImage4;
-    ImageView cardImage5;
+    private final ImageView cardImage1 = new ImageView();
+    private final ImageView cardImage2 = new ImageView();
+    private final ImageView cardImage3 = new ImageView();
+    private final ImageView cardImage4 = new ImageView();
+    private final ImageView cardImage5 = new ImageView();
+    private final Image cardBackside = new Image("/images/playingCardsSizeSmall/B0.png");
 
-    PlayingCardHand dealtHand;
+    private PlayingCardHand dealtHand;
 
 
     public ArrayList<Image> prepareImagesFromListOfCards(ArrayList<PlayingCard> listOfCards) {
@@ -65,13 +66,6 @@ public class CardGameWindow
         Text womanField = new Text();
         Text heartField = new Text();
 
-        Image cardBackside = new Image("/images/playingCardsSizeSmall/B0.png");
-        this.cardImage1 = new ImageView(cardBackside);
-        this.cardImage2 = new ImageView(cardBackside);
-        this.cardImage3 = new ImageView(cardBackside);
-        this.cardImage4 = new ImageView(cardBackside);
-        this.cardImage5 = new ImageView(cardBackside);
-
         cardView.getChildren().addAll(
                 this.cardImage1, this.cardImage2, this.cardImage3, this.cardImage4, this.cardImage5);
         playArea.getChildren().addAll(dealCardsButton, checkCardsButton);
@@ -82,13 +76,11 @@ public class CardGameWindow
 
                     this.dealtHand = deckOfCards.dealHand(5);
 
-                    ImageView imageView = new ImageView(cardBackside);
-
-                    this.cardImage1 = imageView;
-                    this.cardImage2 = imageView;
-                    this.cardImage3 = imageView;
-                    this.cardImage4 = imageView;
-                    this.cardImage5 = imageView;
+                    this.cardImage1.setImage(cardBackside);
+                    this.cardImage2.setImage(cardBackside);
+                    this.cardImage3.setImage(cardBackside);
+                    this.cardImage4.setImage(cardBackside);
+                    this.cardImage5.setImage(cardBackside);
 
                     //imageView1.setImage(dealtHand.getPlayingCardHand().get(0));
                     //imageView2.setImage(cardImages);
@@ -102,12 +94,11 @@ public class CardGameWindow
 
                         ArrayList<Image> imagesOfCards = prepareImagesFromListOfCards(dealtHand.getPlayingCardHand());
 
-                        cardImage1 = new ImageView(imagesOfCards.get(0));
-                        cardImage2 = new ImageView(imagesOfCards.get(1));
-                        cardImage3 = new ImageView(imagesOfCards.get(2));
-                        cardImage4 = new ImageView(imagesOfCards.get(3));
-                        cardImage5 = new ImageView(imagesOfCards.get(4));
-
+                        this.cardImage1.setImage(imagesOfCards.get(0));
+                        this.cardImage2.setImage(imagesOfCards.get(1));
+                        this.cardImage3.setImage(imagesOfCards.get(2));
+                        this.cardImage4.setImage(imagesOfCards.get(3));
+                        this.cardImage5.setImage(imagesOfCards.get(4));
 
                         flushField.setText(this.dealtHand.isFlush() ? "YES" : "NO");
                         System.out.println(this.dealtHand.isFlush() ? "YES" : "NO");
