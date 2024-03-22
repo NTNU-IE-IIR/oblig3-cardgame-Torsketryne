@@ -1,6 +1,8 @@
 package no.ntnu.idatx2003.oblig3.cardgame;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,105 +17,121 @@ import javafx.scene.control.Button;
 import javafx.event.Event;
 
 public class CardGameWindow
-    extends Application {
+        extends Application {
+
+    ImageView cardImage1;
+    ImageView cardImage2;
+    ImageView cardImage3;
+    ImageView cardImage4;
+    ImageView cardImage5;
 
     PlayingCardHand dealtHand;
 
 
-  public HashMap<String, Image> prepareImagesFromListOfCards() {
-    HashMap<String, Image> mapOfCardImages = new HashMap<>();
-    DeckOfCards deckOfCards = new DeckOfCards();
-    Image image;
-    for (PlayingCard playingCard :
-        deckOfCards.makeArrayListFromHashmap(deckOfCards.getDeckOfCards())) {
-      image = new Image("/images/playingCardsSizeStandard/"
-          + playingCard.getAsString() + ".png");
-      mapOfCardImages.put(playingCard.getAsString(), image);
+    public ArrayList<Image> prepareImagesFromListOfCards(ArrayList<PlayingCard> listOfCards) {
+        ArrayList<Image> listOfCardImages = new ArrayList<>();
+        Image image;
+        for (PlayingCard playingCard : listOfCards) {
+            image = new Image("/images/playingCardsSizeStandard/" + playingCard.getAsString() + ".png");
+            listOfCardImages.add(image);
+        }
+        return listOfCardImages;
     }
-    return mapOfCardImages;
-  }
 
-  @Override
-  public void start(Stage stage) throws Exception {
-    DeckOfCards deckOfCards = new DeckOfCards();
-    HashMap<String, Image> cardImages = prepareImagesFromListOfCards();
+    @Override
+    public void start(Stage stage) throws Exception {
+        DeckOfCards deckOfCards = new DeckOfCards();
 
-    BorderPane rootNode = new BorderPane();
+        BorderPane rootNode = new BorderPane();
 
-    FlowPane cardView = new FlowPane();
-    VBox playArea = new VBox();
-    playArea.setPadding(new Insets(10,10,10,10));
-    HBox infoArea = new HBox();
-    infoArea.setPadding(new Insets(10,10,10,10));
+        FlowPane cardView = new FlowPane();
+        VBox playArea = new VBox();
+        playArea.setPadding(new Insets(10, 10, 10, 10));
+        HBox infoArea = new HBox();
+        infoArea.setPadding(new Insets(10, 10, 10, 10));
 
-    rootNode.setCenter(cardView);
-    rootNode.setRight(playArea);
-    rootNode.setBottom(infoArea);
+        rootNode.setCenter(cardView);
+        rootNode.setRight(playArea);
+        rootNode.setBottom(infoArea);
 
-    Button dealCardsButton = new Button();
-    dealCardsButton.setText("Deal cards");
-    Button checkCardsButton = new Button();
-    checkCardsButton.setText("Check cards");
+        Button dealCardsButton = new Button();
+        dealCardsButton.setText("Deal cards");
+        Button checkCardsButton = new Button();
+        checkCardsButton.setText("Check cards");
 
-    TextField cardSumField = new TextField();
-    cardSumField.setText("0");
-    TextField flushField = new TextField();
-    flushField.setText("No");
+        TextField cardSumField = new TextField();
+        TextField flushField = new TextField();
+        TextField womanField = new TextField();
 
+        Image cardBackside = new Image("/images/playingCardsSizeSmall/B0.png");
+        this.cardImage1 = new ImageView(cardBackside);
+        this.cardImage2 = new ImageView(cardBackside);
+        this.cardImage3 = new ImageView(cardBackside);
+        this.cardImage4 = new ImageView(cardBackside);
+        this.cardImage5 = new ImageView(cardBackside);
 
-    TextField womanField = new TextField();
+        cardView.getChildren().addAll(
+                this.cardImage1, this.cardImage2, this.cardImage3, this.cardImage4, this.cardImage5);
+        playArea.getChildren().addAll(dealCardsButton, checkCardsButton);
+        infoArea.getChildren().addAll(cardSumField, flushField);
 
-    Image c12 = new Image("/images/playingCardsSizeSmall/c13.png");
-    ImageView imageView1 = new ImageView();
-    ImageView imageView2 = new ImageView();
-    ImageView imageView3 = new ImageView();
-    ImageView imageView4 = new ImageView();
-    ImageView imageView5 = new ImageView();
-    imageView2.setImage(c12);
+        dealCardsButton.setOnAction(actionEvent -> {
+                    System.out.println("dealHand button pressed");
 
-    cardView.getChildren().addAll(imageView1, imageView2, imageView3, imageView4, imageView5);
+            this.dealtHand = deckOfCards.dealHand(5);
 
-    playArea.getChildren().addAll(dealCardsButton, checkCardsButton);
+                    ImageView imageView = new ImageView(cardBackside);
 
-    infoArea.getChildren().addAll(cardSumField, flushField);
+            this.cardImage1 = imageView;
+            this.cardImage2 = imageView;
+            this.cardImage3 = imageView;
+            this.cardImage4 = imageView;
+            this.cardImage5 = imageView;
 
-    Scene scene = new Scene(rootNode, 900, 500);
-
-    stage.setScene(scene);
-    stage.setTitle("Playing card game");
-
-    dealCardsButton.setOnAction(actionEvent -> {
-          System.out.println("dealHand button pressed");
-
-          dealtHand = deckOfCards.dealHand(5);
-          //imageView1.setImage(dealtHand.getPlayingCardHand().get(0));
-          //imageView2.setImage(cardImages);
-        }
+                    //imageView1.setImage(dealtHand.getPlayingCardHand().get(0));
+                    //imageView2.setImage(cardImages);
+                }
         );
 
-    checkCardsButton.setOnAction(actionEvent -> {
-          System.out.println("checkHand button pressed");
+        checkCardsButton.setOnAction(actionEvent -> {
+                    System.out.println("checkHand button pressed");
 
-          flushField.setText(dealtHand.isFlush()?"YES":"NO");
-          System.out.println(dealtHand.isFlush()?"YES":"NO");
+                    if (!this.dealtHand.getPlayingCardHand().isEmpty()) {
 
-          womanField.setText(dealtHand.isClubWomanInHand()?"YES":"NO");
-          System.out.println(dealtHand.isClubWomanInHand()?"YES":"NO");
+                        ArrayList<Image> imagesOfCards = prepareImagesFromListOfCards(dealtHand.getPlayingCardHand());
+
+                        cardImage1 = new ImageView(imagesOfCards.get(0));
+                        cardImage2 = new ImageView(imagesOfCards.get(1));
+                        cardImage3 = new ImageView(imagesOfCards.get(2));
+                        cardImage4 = new ImageView(imagesOfCards.get(3));
+                        cardImage5 = new ImageView(imagesOfCards.get(4));
 
 
-          if (!dealtHand.listOfHeartsInHand().isEmpty()) {
-              System.out.println("There are cards of heart in the hand");
-            }
+                        flushField.setText(this.dealtHand.isFlush() ? "YES" : "NO");
+                        System.out.println(this.dealtHand.isFlush() ? "YES" : "NO");
 
-            System.out.println("The sum of the cards is: " + dealtHand.sumOfhand());
-            cardSumField.setText(dealtHand.sumOfhand() + "");
-        }
+                        womanField.setText(this.dealtHand.isClubWomanInHand() ? "YES" : "NO");
+                        System.out.println(this.dealtHand.isClubWomanInHand() ? "YES" : "NO");
+
+
+                        if (!this.dealtHand.listOfHeartsInHand().isEmpty()) {
+                            System.out.println("There are cards of heart in the hand");
+                        }
+
+                        System.out.println("The sum of the cards is: " + this.dealtHand.sumOfhand());
+                        cardSumField.setText(this.dealtHand.sumOfhand() + "");
+                    }
+                }
         );
 
-    stage.show();
-  }
+        Scene scene = new Scene(rootNode, 900, 500);
 
-  public static void appMain(String[] args) {
-    launch(args);
-  }
+        stage.setScene(scene);
+        stage.setTitle("Playing card game");
+        stage.show();
+    }
+
+    public static void appMain(String[] args) {
+        launch(args);
+    }
 }
