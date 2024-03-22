@@ -33,7 +33,7 @@ public class CardGameWindow
         ArrayList<Image> listOfCardImages = new ArrayList<>();
         Image image;
         for (PlayingCard playingCard : listOfCards) {
-            image = new Image("/images/playingCardsSizeStandard/" + playingCard.getAsString() + ".png");
+            image = new Image("/images/playingCardsSizeSmall/" + playingCard.getAsString() + ".png");
             listOfCardImages.add(image);
         }
         return listOfCardImages;
